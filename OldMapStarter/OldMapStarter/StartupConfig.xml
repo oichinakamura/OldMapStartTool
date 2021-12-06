@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root ServerPath="D:\案件毎\姶良市" Exec="地図システム\地図システム.exe">
+  <Directory Name="地図システム">
+    <File Name="地図システム.exe"/>
+    <File Name="MapDLL.dll"/>
+    <File Name="ToolDLL.dll"/>
+    <File Name="MapGuide.dll"/>
+    <File Name="NCSEcw.dll"/>
+    <File Name="NCSUtil.dll"/>
+    <File Name="AgriAdm.dll"/>
+    <File Name="dNet4Extention.dll"/>
+    <File Name="NCScnet.dll"/>
+  </Directory>
+  <Directory Name="DATABASE">
+    <File Name="地図情報.mdb"/>
+    <File Name="BasicDB.mdb"/>
+    <File Name="GROUPDB.mdb" />
+  </Directory>
+</root>
