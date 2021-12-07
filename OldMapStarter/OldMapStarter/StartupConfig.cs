@@ -148,7 +148,9 @@ namespace OldMapStarter
     {
         protected internal XmlFile(string prefix, string localName, string namespaceURI, XmlDocument doc) : base(prefix, localName, namespaceURI, doc)
         {
+
         }
+
         private string thisName;
         public override void Compare(string localPath, string serverPath, ListBox list)
         {
@@ -169,6 +171,22 @@ namespace OldMapStarter
                     copy.ProgressChanged += Copy_ProgressChanged;
                     var result = copy.CopyStart(serverThisName, localName, true);
 
+                    list.Items.Add($"{thisName}をコピーしました。");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    Environment.Exit(-1);
+                }
+            }
+            else if (bool.TryParse(GetAttribute("ForcedRead"), out bool rorcedRead) && rorcedRead)
+            {
+                try
+                {
+                    ProgBar.FileName = thisName;
+                    var copy = new CopyFileProgress();
+                    copy.ProgressChanged += Copy_ProgressChanged;
+                    var result = copy.CopyStart(serverThisName, localName, true);
                     list.Items.Add($"{thisName}をコピーしました。");
                 }
                 catch (Exception ex)

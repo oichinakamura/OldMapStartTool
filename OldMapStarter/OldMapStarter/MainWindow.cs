@@ -35,13 +35,21 @@ namespace OldMapStarter
                 panel.Children.Add(messA);
             }
 
+
+            var ignore = new ButtonEx(Ignore_Click) { Content = "無視", ClickMode = ClickMode.Press };
             var cancel = new ButtonEx(Cancel_Click) { Content = "キャンセル", ClickMode = ClickMode.Press };
-            DockPanel.SetDock(cancel, Dock.Bottom);
-            panel.Children.Add(cancel);
+
+            var bottomBar = new BottomBar() {Orientation=Orientation.Horizontal };
+            DockPanel.SetDock(bottomBar, Dock.Bottom);
+
+            bottomBar.Children.Add(ignore); 
+            bottomBar.Children.Add(cancel);
+            panel.Children.Add(bottomBar);
 
             var progress = new ProgressView() { };
             DockPanel.SetDock(progress, Dock.Bottom);
             panel.Children.Add(progress);
+
 
             var st = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             startupConfig = new StartupConfig(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location));
@@ -97,6 +105,12 @@ namespace OldMapStarter
             startupConfig.LocalSave();
             MessageBox.Show("更新が完了しました。");
 
+            startupConfig.Execute();
+            Environment.Exit(0);
+        }
+
+        private void Ignore_Click(object sender, RoutedEventArgs e)
+        {
             startupConfig.Execute();
             Environment.Exit(0);
         }
@@ -179,6 +193,29 @@ namespace OldMapStarter
             Click += eventHandler;
 
         }
+
+    }
+
+    public class BottomBar : StackPanel
+    {
+        public BottomBar()
+        {
+            HorizontalAlignment = HorizontalAlignment.Stretch;
+            SizeChanged += BottomBar_SizeChanged;
+        }
+
+        private void BottomBar_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (Children.Count > 0)
+            {
+                var w = ActualWidth / Children.Count;
+                foreach (Control ctrl in Children)
+                {
+                    ctrl.Width = w;
+                }
+            }
+        }
+
 
     }
 }
